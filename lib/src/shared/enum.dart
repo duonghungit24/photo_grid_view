@@ -1,0 +1,1 @@
+enum PhotoGridViewType { list, grid }
