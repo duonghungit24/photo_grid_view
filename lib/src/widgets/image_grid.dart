@@ -9,10 +9,12 @@ class ImageGrid extends StatelessWidget {
       {super.key,
       required this.assetSource,
       this.onTap,
+      this.hero,
       required this.imgStyle});
   final String assetSource;
   final VoidCallback? onTap;
   final ImageGridStyle imgStyle;
+  final Object? hero;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class ImageGrid extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(imgStyle.radius)),
         child: Hero(
-          tag: assetSource,
+          tag: hero ?? assetSource,
           child: isNetworkAsset
               ? CachedNetworkImage(
                   imageUrl: imgStyle.thumbnailSource ?? assetSource,

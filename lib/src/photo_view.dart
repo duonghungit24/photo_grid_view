@@ -7,10 +7,12 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 
 class PhotoView extends StatefulWidget {
-  const PhotoView({super.key, this.images = const [], this.intialIndex = 0});
+  const PhotoView(
+      {super.key, this.images = const [], this.intialIndex = 0, this.hero});
 
   final List<String> images;
   final int intialIndex;
+  final Object? hero;
   @override
   State<PhotoView> createState() => _PhotoViewState();
 }
@@ -55,6 +57,7 @@ class _PhotoViewState extends State<PhotoView> {
                 final assetSource = widget.images[index];
                 return PhotoViewGalleryPageOptions.customChild(
                   child: ImageGrid(
+                      hero: widget.hero,
                       assetSource: assetSource,
                       imgStyle: ImageGridStyle(
                         boxFit: BoxFit.contain,
@@ -97,7 +100,7 @@ class _PhotoViewState extends State<PhotoView> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: GestureDetector(
-                onTap: () => Navigator.pop(context),
+                onTap: () => Navigator.of(context).pop(),
                 child: Center(
                   child: Icon(Icons.close, color: Colors.white, size: 22),
                 ),
