@@ -1,6 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_grid_view/photo_grid_view.dart';
+import 'package:photo_grid_view/src/widgets/image_grid.dart';
 import 'package:photo_grid_view/src/widgets/rounded_icon_button.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -34,6 +35,17 @@ class _PhotoViewState extends State<PhotoView> {
       },
       direction: DismissiblePageDismissDirection.vertical,
       isFullScreen: true,
+      disabled: false,
+      minRadius: 10,
+      maxRadius: 10,
+      dragSensitivity: 1.0,
+      maxTransformValue: .8,
+      dismissThresholds: {
+        DismissiblePageDismissDirection.vertical: .3,
+      },
+      minScale: .8,
+      startingOpacity: 1,
+      reverseDuration: const Duration(milliseconds: 250),
       child: Stack(
         children: [
           Positioned.fill(
@@ -41,39 +53,32 @@ class _PhotoViewState extends State<PhotoView> {
               pageController: pageController,
               itemCount: widget.images.length,
               builder: (context, index) {
+                final assetSource = widget.images[index];
                 return PhotoViewGalleryPageOptions.customChild(
-                  child: CachedNetworkImage(
-                    imageUrl: widget.images[index],
-                    fit: BoxFit.contain,
-                    placeholder:
-                        (context, url) => Center(
-                          child: CupertinoActivityIndicator(
-                            color: Colors.white,
-                            radius: 10,
-                          ),
-                        ),
-                  ),
+                  child: ImageGrid(
+                      assetSource: assetSource,
+                      imgStyle: ImageGridStyle(
+                        boxFit: BoxFit.contain,
+                      )),
                   minScale: PhotoViewComputedScale.contained * 0.8,
                   maxScale: PhotoViewComputedScale.covered * 3,
-                  heroAttributes: PhotoViewHeroAttributes(tag: index),
                 );
               },
               scrollPhysics: const BouncingScrollPhysics(),
               backgroundDecoration: BoxDecoration(color: Colors.transparent),
-              loadingBuilder:
-                  (context, event) => const Center(
-                    child: SizedBox(
-                      width: 20.0,
-                      height: 20.0,
-                      // child: CircularProgressIndicator(
-                      //   value: event == null ? 0 : event.cumulativeBytesLoaded / (event.expectedTotalBytes ?? 1),
-                      // ),
-                      child: CupertinoActivityIndicator(
-                        color: Colors.white,
-                        radius: 10,
-                      ),
-                    ),
+              loadingBuilder: (context, event) => const Center(
+                child: SizedBox(
+                  width: 20.0,
+                  height: 20.0,
+                  // child: CircularProgressIndicator(
+                  //   value: event == null ? 0 : event.cumulativeBytesLoaded / (event.expectedTotalBytes ?? 1),
+                  // ),
+                  child: CupertinoActivityIndicator(
+                    color: Colors.white,
+                    radius: 10,
                   ),
+                ),
+              ),
               onPageChanged: (index) {
                 setState(() {
                   currentPage = index;

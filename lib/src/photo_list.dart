@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photo_grid_view/photo_grid_view.dart';
 import 'package:photo_grid_view/src/widgets/image_grid.dart';
-import 'package:dismissible_page/dismissible_page.dart';
 
 class PhotoList extends StatefulWidget {
   const PhotoList(
@@ -47,12 +46,10 @@ class _PhotoListState extends State<PhotoList>
                 assetSource: widget.listImage[index],
                 imgStyle: widget.imgStyle,
                 onTap: () {
-                  context.pushTransparentRoute(
-                    PhotoView(
-                      images: widget.listImage,
-                      intialIndex: _currentIndex,
-                    ),
-                  );
+                  onViewImage(
+                      context: context,
+                      listImages: widget.listImage,
+                      currentIndex: _currentIndex);
                 },
               );
             },

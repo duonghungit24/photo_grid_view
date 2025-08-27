@@ -1,8 +1,7 @@
-import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:photo_grid_view/src/photo_view.dart';
 import 'package:photo_grid_view/src/shared/image_grid_style.dart';
+import 'package:photo_grid_view/src/shared/utils.dart';
 import 'package:photo_grid_view/src/widgets/image_grid.dart';
 
 class PhotoImageGrid extends StatelessWidget {
@@ -25,17 +24,14 @@ class PhotoImageGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final assetCount = dataSource.length;
 
-    void onViewImage(index) {
-      context.pushTransparentRoute(
-        PhotoView(images: dataSource, intialIndex: index),
-      );
-    }
-
     void onTap(index) {
       if (onTapImage != null) {
         onTapImage?.call(index);
       } else {
-        onViewImage(dataSource.indexOf(dataSource[index]));
+        onViewImage(
+            context: context,
+            listImages: dataSource,
+            currentIndex: dataSource.indexOf(dataSource[index]));
       }
     }
 
