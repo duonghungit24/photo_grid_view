@@ -13,7 +13,7 @@ void onViewImage({
 }) {
   context.pushTransparentRoute(
     PhotoView(images: listImages, intialIndex: currentIndex),
-    transitionDuration: const Duration(milliseconds: 350),
-    reverseTransitionDuration: const Duration(milliseconds: 300),
+    transitionDuration: const Duration(milliseconds: 250),
+    reverseTransitionDuration: const Duration(milliseconds: 250),
   );
 }

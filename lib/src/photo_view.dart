@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_grid_view/photo_grid_view.dart';
-import 'package:photo_grid_view/src/widgets/image_grid.dart';
 import 'package:photo_grid_view/src/widgets/rounded_icon_button.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -41,7 +40,7 @@ class _PhotoViewState extends State<PhotoView> {
       dragSensitivity: 1.0,
       maxTransformValue: .8,
       dismissThresholds: {
-        DismissiblePageDismissDirection.vertical: .3,
+        DismissiblePageDismissDirection.vertical: .2,
       },
       minScale: .8,
       startingOpacity: 1,
