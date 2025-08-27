@@ -1,17 +1,17 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_grid_view/src/photo_view.dart';
-import 'package:photo_grid_view/src/widgets/shimmer_shape.dart';
+import 'package:photo_grid_view/photo_grid_view.dart';
+import 'package:photo_grid_view/src/widgets/image_grid.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 
 class PhotoList extends StatefulWidget {
-  const PhotoList({
-    super.key,
-    required this.listImage,
-    this.disableViewImage = false,
-  });
+  const PhotoList(
+      {super.key,
+      required this.listImage,
+      this.disableViewImage = false,
+      required this.imgStyle});
   final List<String> listImage;
   final bool disableViewImage;
+  final ImageGridStyle imgStyle;
 
   @override
   State<PhotoList> createState() => _PhotoListState();
@@ -43,9 +43,9 @@ class _PhotoListState extends State<PhotoList>
               });
             },
             itemBuilder: (context, index) {
-              return InkWell(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
+              return ImageGrid(
+                assetSource: widget.listImage[index],
+                imgStyle: widget.imgStyle,
                 onTap: () {
                   context.pushTransparentRoute(
                     PhotoView(
@@ -54,19 +54,6 @@ class _PhotoListState extends State<PhotoList>
                     ),
                   );
                 },
-                child: CachedNetworkImage(
-                  width: double.infinity,
-                  height: 160,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  imageUrl: widget.listImage[index],
-                  placeholder:
-                      (context, url) => ShimmerShape.rectangular(
-                        width: double.infinity,
-                        height: 160,
-                      ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ),
               );
             },
             pageSnapping: true,
@@ -98,32 +85,5 @@ class _PhotoListState extends State<PhotoList>
         ],
       ),
     );
-  }
-
-  List<Widget> _buildIndicators() {
-    const int maxIndicators = 4; // Số indicator tối đa hiển thị (giống Threads)
-    int startIndex = (_currentIndex ~/ maxIndicators) * maxIndicators;
-    int endIndex = (startIndex + maxIndicators).clamp(
-      0,
-      widget.listImage.length,
-    );
-
-    return List.generate(endIndex - startIndex, (index) {
-      int displayIndex = startIndex + index;
-      bool isActive = _currentIndex == displayIndex;
-      return AnimatedContainer(
-        duration: const Duration(
-          milliseconds: 300,
-        ), // Tốc độ chuyển đổi mượt mà
-        curve: Curves.easeInOut,
-        margin: const EdgeInsets.symmetric(horizontal: 4.0),
-        height: 8.0,
-        width: isActive ? 12.0 : 8.0, // Chấm hiện tại lớn hơn một chút
-        decoration: BoxDecoration(
-          color: isActive ? Colors.blue : Colors.white.withOpacity(0.5),
-          shape: BoxShape.circle, // Dùng hình tròn giống Threads
-        ),
-      );
-    });
   }
 }

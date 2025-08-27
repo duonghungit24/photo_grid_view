@@ -1,24 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:photo_grid_view/src/shared/image_grid_style.dart';
 import 'package:photo_grid_view/src/shared/utils.dart';
 
 class ImageGrid extends StatelessWidget {
-  const ImageGrid({
-    super.key,
-    required this.assetSource,
-    this.thumbnailSource,
-    this.imageHeight,
-    this.imageWidth = double.infinity,
-    this.onTap,
-  });
+  const ImageGrid(
+      {super.key,
+      required this.assetSource,
+      this.onTap,
+      required this.imgStyle});
   final String assetSource;
-  final String? thumbnailSource;
-  final BoxFit fit = BoxFit.cover;
-  final double imageWidth;
-  final double? imageHeight;
   final VoidCallback? onTap;
+  final ImageGridStyle imgStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -26,30 +20,28 @@ class ImageGrid extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderRadius: BorderRadius.all(Radius.circular(imgStyle.radius)),
         child: Hero(
           tag: assetSource,
-          child:
-              isNetworkAsset
-                  ? CachedNetworkImage(
-                    imageUrl: thumbnailSource ?? assetSource,
-                    fit: fit,
-                    placeholder:
-                        (context, url) => Center(
-                          child: CupertinoActivityIndicator(
-                            color: Colors.white,
-                            radius: 10,
-                          ),
-                        ),
-                    width: imageWidth,
-                    height: imageHeight,
-                  )
-                  : Image.asset(
-                    assetSource,
-                    fit: fit,
-                    width: imageWidth,
-                    height: imageHeight,
+          child: isNetworkAsset
+              ? CachedNetworkImage(
+                  imageUrl: imgStyle.thumbnailSource ?? assetSource,
+                  fit: imgStyle.boxFit,
+                  placeholder: (context, url) => Center(
+                    child: CupertinoActivityIndicator(
+                      color: Colors.white,
+                      radius: 10,
+                    ),
                   ),
+                  width: imgStyle.imageWidth,
+                  height: imgStyle.imageHeight,
+                )
+              : Image.asset(
+                  assetSource,
+                  fit: imgStyle.boxFit,
+                  width: imgStyle.imageWidth,
+                  height: imgStyle.imageHeight,
+                ),
         ),
       ),
     );
