@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final combineItems = [
     'https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg',
-    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
+    // 'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
     //  'https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
     //  'https://api.quanlysan.vn/Uploads/Assets/2025/7/image_picker_99276271-8338-44C1-8F75-E77E813F1CB3-16524-000005A9681E8E1D_151727.jpg',
     // 'https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/14235/production/_100058428_mediaitem100058424.jpg',
@@ -140,10 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         currentIndex: index,
                       ),
                     },
-                imageStyle: ImageGridStyle(
-                  boxFit: BoxFit.cover,
-                  imageWidth: 100,
-                ),
+                imageStyle: ImageGridStyle(boxFit: BoxFit.cover),
                 //  onTap: (index) => {print("index ${index}")},
               ),
             ),
